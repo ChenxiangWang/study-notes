@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片的懒加载</title>
+</head>
+<body>
+    <h1>
+        There are three main ways to make images lazy loaded
+    </h1>
+    <p>
+        1. subscribe the "scroll" event
+    </p>
+    <hr>
+    <p>
+        2. use the "intersectionObserver" method
+    </p>
+    <p>
+        3. use the attribute "lazing"
+    </p>
+    <hr>
+    <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi possimus natus beatae repellat corrupti ipsum dicta mollitia assumenda veritatis, cum accusantium aliquid repudiandae sequi quisquam temporibus vel ipsa debitis doloremque!
+    </p>
+    <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi possimus natus beatae repellat corrupti ipsum dicta mollitia assumenda veritatis, cum accusantium aliquid repudiandae sequi quisquam temporibus vel ipsa debitis doloremque!
+    </p>
+    <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi possimus natus beatae repellat corrupti ipsum dicta mollitia assumenda veritatis, cum accusantium aliquid repudiandae sequi quisquam temporibus vel ipsa debitis doloremque!
+    </p>
+    <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi possimus natus beatae repellat corrupti ipsum dicta mollitia assumenda veritatis, cum accusantium aliquid repudiandae sequi quisquam temporibus vel ipsa debitis doloremque!
+    </p>
+    <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi possimus natus beatae repellat corrupti ipsum dicta mollitia assumenda veritatis, cum accusantium aliquid repudiandae sequi quisquam temporibus vel ipsa debitis doloremque!
+    </p>
+    <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi possimus natus beatae repellat corrupti ipsum dicta mollitia assumenda veritatis, cum accusantium aliquid repudiandae sequi quisquam temporibus vel ipsa debitis doloremque!
+    </p>
+    <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi possimus natus beatae repellat corrupti ipsum dicta mollitia assumenda veritatis, cum accusantium aliquid repudiandae sequi quisquam temporibus vel ipsa debitis doloremque!
+    </p>
+    <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi possimus natus beatae repellat corrupti ipsum dicta mollitia assumenda veritatis, cum accusantium aliquid repudiandae sequi quisquam temporibus vel ipsa debitis doloremque!
+    </p>
+    <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi possimus natus beatae repellat corrupti ipsum dicta mollitia assumenda veritatis, cum accusantium aliquid repudiandae sequi quisquam temporibus vel ipsa debitis doloremque!
+    </p>
+    <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi possimus natus beatae repellat corrupti ipsum dicta mollitia assumenda veritatis, cum accusantium aliquid repudiandae sequi quisquam temporibus vel ipsa debitis doloremque!
+    </p>
+    <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi possimus natus beatae repellat corrupti ipsum dicta mollitia assumenda veritatis, cum accusantium aliquid repudiandae sequi quisquam temporibus vel ipsa debitis doloremque!
+    </p>
+    <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi possimus natus beatae repellat corrupti ipsum dicta mollitia assumenda veritatis, cum accusantium aliquid repudiandae sequi quisquam temporibus vel ipsa debitis doloremque!
+    </p>
+    <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi possimus natus beatae repellat corrupti ipsum dicta mollitia assumenda veritatis, cum accusantium aliquid repudiandae sequi quisquam temporibus vel ipsa debitis doloremque!
+    </p>
+    <img id="1" data-src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic_source%2F91%2F81%2Fd7%2F9181d7d8787f7e96f0017da5e61ad27d.jpg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1657266513&t=e599fd9b95973cc16d9e18e4cb3f4036" alt="method 1">
+    <img id="2" data-src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic_source%2F91%2F81%2Fd7%2F9181d7d8787f7e96f0017da5e61ad27d.jpg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1657266513&t=e599fd9b95973cc16d9e18e4cb3f4036" alt="method 2">
+</body>
+    <script>
+
+        const img1 = document.getElementById("1")
+        const img2 = document.getElementById("2")
+
+        // 方法1
+        function handleScroll(event) {
+            if (img1.getBoundingClientRect().top < window.innerHeight) {
+                let trueSrc = img1.getAttribute("data-src");
+                img1.setAttribute("src", trueSrc);
+                // 防止多次触发
+                window.removeEventListener("scroll", handleScroll)
+            }
+        } 
+
+        window.addEventListener("scroll", handleScroll);
+        
+        // 方法2
+
+        const callback = (entries) => {
+            console.log(entries);
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    console.log(img);
+                    let trueSrc = img.getAttribute("data-src");
+                    img.setAttribute("src", trueSrc);
+                    // 取消观察
+                    observer.unobserve(img2);
+                }
+            })
+        }
+
+        //开始观察
+        const observer = new IntersectionObserver(callback);
+        observer.observe(img2);
+    </script>
+</html>

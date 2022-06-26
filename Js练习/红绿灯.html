@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    
+    .container {
+        background-color: gray;
+        width: 50px;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .red {
+        justify-content: flex-start;
+    }
+
+
+    .green {
+        justify-content: flex-end;
+    }
+
+
+    .yellow {
+        justify-content: center;
+    }
+    
+    .square {
+        width: 50px;
+        height: 50px;
+        border-radius: 25px;
+        margin: 10px auto;
+        background-color: red;
+        text-align: center;
+        line-height: 50px;
+    }
+    
+</style>
+<body>
+    <div class="container">
+        <div class="square red">10</div>
+    </div>
+</body>
+
+<script type="text/javascript">
+    let container = document.getElementsByClassName("container")[0];
+    let square = document.getElementsByClassName("square")[0];
+    
+    let time = 10;
+    
+    setInterval(()=> {
+        time--;
+        square.innerText = time+"";
+    },1000)
+    
+    update('yellow', 'red');
+    
+    
+    function update(from, to) {
+        if (to === 'yellow') {
+            container.className = 'container yellow';
+            square.style.backgroundColor = 'yellow';
+            time = 3;
+            square.innerText = 3+"";
+            if (from === 'green') {
+               
+                setTimeout(()=> {
+                    update(to, 'red');
+                }, 3000);
+            } else {
+                setTimeout(()=> {
+                    update(to, 'green');
+                }, 3000);
+            }
+        }
+        if (to === 'red') {
+            container.className = 'container red';
+            square.style.backgroundColor = 'red';
+            time = 10;
+            square.innerText = 10+"";
+            setTimeout(() => {
+                update(to, 'yellow');
+            }, 10000)
+        }
+        if (to === 'green') {
+            time = 10;
+            square.innerText = 10+"";
+            container.className = 'container green';
+            square.style.backgroundColor = 'green';
+            setTimeout(()=> {
+                update(to, 'yellow');
+            },10000)
+        }
+    }
+</script>
+
+
+</html>

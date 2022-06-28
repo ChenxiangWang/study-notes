@@ -10,12 +10,12 @@ function allSettled (promises) {
     return new Promise((resolve, reject) => {
         promises.forEach((p, index)=> {
             p.then((value => {
-                res[index] = 'resolved';
+                res[index] = value;
                 count++;
                 if (count === promises.length) {resolve(res)}
             }), err => {
                 count++;
-                res[index] = 'rejected';
+                res[index] = err;
                 if (count === promises.length) {resolve(res)}
             })
         })

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .ellipsis {
+            width: 50px;
+            height: 50px;
+            background-color: gray;
+            
+            /*text overflow时候隐藏，同时也触发bfc*/
+            overflow: hidden;
+            /*设置文字省略的符号*/
+            text-overflow: ellipsis;
+            /*单行显示，不会强制换行*/
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="ellipsis">
+            I am chenxiang wang,
+            I am chenxiang wang,
+            I am chenxiang wang,
+            I am chenxiang wang,
+            I am chenxiang wang,
+            I am chenxiang wang,
+    </div>
+</body>
+</html>

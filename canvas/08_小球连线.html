@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="300" height="300"></canvas>
+    <script>
+        class Ball {
+            constructor(x, y, r, color) {
+                this.x = x;
+                this.y = y;
+                this.r = r;
+                this.dx = Math.floor(Math.random() * 10) - 5;
+                this.dy = Math.floor(Math.random() * 10) - 5;
+                this.color = color;
+            }
+            // return false if the ball should be removed
+            // return true if the ball is updated successfully
+            update (context) {
+                this.x += this.dx;
+                this.y += this.dy;
+                if (this.x < this.r) {
+                    this.x =  this.r;
+                    this.dx = -this.dx;
+                }
+                if (this.y < this.r) {
+                    this.y = this.r;
+                    this.dy = -this.dy;
+                }
+                if (this. x >= 300 - this.r) {
+                    this.x = 300 - this.r;
+                    this.dx = -this.dx;
+                }
+                if (this.y >= 300 - this.r) {
+                    this.y = 300 - this.r;
+                    this.dy = -this.dy;
+                }
+            }
+            render(ctx) {
+                ctx.moveTo(this.x, this.y);
+                ctx.fillStyle = this.color;
+                ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, true);
+                ctx.fill();
+                this.update();
+            }
+        }
+
+        class Drawer {
+            constructor (canvas) {
+                this.canvas = canvas;
+                this.balls = new Array();
+            }
+            add(ball) {
+                this.balls.push(ball);
+            }
+            size() {
+                return this.balls.length;
+            }
+            paint() {
+                let ctx = this.canvas.getContext("2d");
+                ctx.clearRect (0,0, canvas.width, canvas.height);
+                ctx.beginPath();
+                for (let ball of this.balls) {
+                    ball.render(ctx);
+                }
+            }
+        }
+
+        function randomColor() {
+            let chars = "0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f";
+            let charArr = chars.split(",");
+            let color = "#";
+            for (let i = 0; i < 6; ++i) {
+                color+= charArr[Math.floor(Math.random()*charArr.length)];
+            }
+            return color;
+        }
+        
+        let canvas = document.getElementById("canvas");
+        let ctx = canvas.getContext("2d");
+        let drawer = new Drawer(canvas);
+        for (let i = 0; i < 10; ++i) {
+            let x = Math.floor(Math.random() * canvas.width);
+            let y = Math.floor(Math.random() * canvas.height);
+            let ball = new Ball(x, y, 10, randomColor());
+            drawer.add(ball);
+        }
+
+        setInterval(function () {
+            drawer.paint();
+        }, 100);
+
+    </script>
+</body>
+</html>
